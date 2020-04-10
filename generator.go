@@ -2,9 +2,9 @@ package main
 
 import (
 	"fmt"
+	"github.com/art-injener/QtProjectGenerator/template"
+	"github.com/art-injener/QtProjectGenerator/tree"
 	"os"
-	//"project_generator/template"
-	//"project_generator/tree"
 )
 
 func main() {
@@ -24,16 +24,16 @@ func main() {
 		}
 	}
 
-	//if e := template.CreateQtProjectTemplate(projectName); e != nil {
-	//	fmt.Errorf("Operation is failed ", e)
-	//}
-	//
-	//out := os.Stdout
-	//if len(path) != 0 {
-	//	err := tree.DirTree(out, path, true)
-	//	if err != nil {
-	//		panic(err.Error())
-	//	}
-	//}
+	if e := template.CreateQtProjectTemplate(projectName); e != nil {
+		fmt.Errorf("Operation is failed : %v", e)
+	}
+
+	out := os.Stdout
+	if len(path) != 0 {
+		err := tree.DirTree(out, path, true)
+		if err != nil {
+			panic(err.Error())
+		}
+	}
 	fmt.Println("PROJECT GENERATION COMPLETED")
 }
