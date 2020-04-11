@@ -24,17 +24,21 @@ func CreateQtProjectTemplate(name string) error {
 		return errors.New("The string with the project name is empty")
 	}
 
+	textFile := []byte("File for add dir to git\n")
 	if currentDir, errDir := os.Getwd(); errDir == nil {
 		if strdir, err := newTemplateDirTree(name, currentDir); err == nil {
 			//defer os.RemoveAll(currentDir+"/"+name)
 			fmt.Println(strdir.nameRootDir)
 			for _, v := range strdir.listDirs {
-				var errMkDir = os.MkdirAll(v, 0777)
+				var errMkDir = os.MkdirAll(v, 0766)
 				check(errMkDir)
+
+				err := ioutil.WriteFile(v+"/README.txt", textFile, 0644)
+				check(err)
 			}
 			mapDirsData := getMapFiles(strdir.nameRootDir, name)
 			for k, v := range mapDirsData {
-				err := ioutil.WriteFile(k, v, 0777)
+				err := ioutil.WriteFile(k, v, 0644)
 				check(err)
 			}
 		} else {
